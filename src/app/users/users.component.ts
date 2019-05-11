@@ -17,7 +17,6 @@ export class UsersComponent implements OnInit {
     this.reqresService.getUsers().subscribe(
         (users) => {
           this.users = users;
-          console.log('users', this.users);
         });
   }
 

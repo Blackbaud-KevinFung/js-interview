@@ -1,3 +1,5 @@
-<p>
-  users works!
-</p>
+<mat-grid-list cols="2" rowHeight="10:1">
+  <mat-grid-tile *ngFor="let user of users">
+    {{user.first_name}}
+  </mat-grid-tile>
+</mat-grid-list>
