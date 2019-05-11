@@ -13,7 +13,7 @@ export class ReqresService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(): Observable<User[]> {
+  public getUsers(): Observable<User[]> {
     return this.http.get<UserResponse>(apiUrl)
         .pipe(
             map((res) => res.data)

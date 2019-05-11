@@ -8,6 +8,7 @@ describe('ReqresService', () => {
 
   beforeEach(() => {
     httpClient = jasmine.createSpyObj('HttpClient', ['get']);
+
     TestBed.configureTestingModule({
       providers: [
         {provide: HttpClient, useValue: httpClient}
