@@ -5,12 +5,15 @@ import { ReqresService } from '../reqres.service';
 import { aRandom } from '../test/aRandom';
 import { of } from 'rxjs';
 import { User } from '../user';
-import { MatGridListModule } from '@angular/material';
+import { MatGridList, MatGridListModule } from '@angular/material';
+import { By } from '@angular/platform-browser';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
   let fixture: ComponentFixture<UsersComponent>;
   let reqresServiceSpy: jasmine.SpyObj<ReqresService>;
+  let elements: any;
+  let users: User[];
 
   beforeEach(() => {
     reqresServiceSpy = jasmine.createSpyObj('ReqresService', ['getUsers']);
@@ -31,15 +34,20 @@ describe('UsersComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UsersComponent);
     component = fixture.componentInstance;
+    elements = {
+      matGridList: (): MatGridList => fixture.debugElement.query(By.directive(MatGridList)).componentInstance
+    };
+    users = aRandom.users();
+    reqresServiceSpy.getUsers.and.returnValue(of(users));
+    fixture.detectChanges();
   });
 
   it('OnNgInit it should fetch users', () => {
-    const users: User[] = aRandom.users();
-    reqresServiceSpy.getUsers.and.returnValue(of(users));
-
-    fixture.detectChanges();
-
     expect(reqresServiceSpy.getUsers).toHaveBeenCalled();
     expect(component.users).toEqual(users);
+  });
+
+  it('should have a grid size of 2', () => {
+    expect(elements.matGridList().cols).toEqual(2);
   });
 });
