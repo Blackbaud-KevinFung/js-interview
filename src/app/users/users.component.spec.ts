@@ -5,11 +5,21 @@ import { ReqresService } from '../reqres.service';
 import { aRandom } from '../test/aRandom';
 import { of } from 'rxjs';
 import { User } from '../user';
-import { MatCardModule, MatFormFieldModule, MatGridList, MatGridListModule, MatInputModule } from '@angular/material';
+import {
+  MatCardModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatGridList,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule
+} from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { UserDetailComponent } from '../user-detail/user-detail.component';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserAddComponent } from '../user-add/user-add.component';
+import { UserAddDialogComponent } from '../user-add-dialog/user-add-dialog.component';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -19,7 +29,7 @@ describe('UsersComponent', () => {
   let users: User[];
 
   beforeEach(() => {
-    reqresServiceSpy = jasmine.createSpyObj('ReqresService', ['getUsers', 'deleteUser']);
+    reqresServiceSpy = jasmine.createSpyObj('ReqresService', ['getUsers', 'deleteUser', 'addUser']);
 
     TestBed.configureTestingModule({
       imports: [
@@ -28,11 +38,16 @@ describe('UsersComponent', () => {
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
+        MatIconModule,
+        MatDialogModule,
+        FormsModule,
         BrowserAnimationsModule
       ],
       declarations: [
         UsersComponent,
-        UserDetailComponent
+        UserDetailComponent,
+        UserAddComponent,
+        UserAddDialogComponent
       ],
       providers: [
         { provide: ReqresService, useValue: reqresServiceSpy },
@@ -65,10 +80,25 @@ describe('UsersComponent', () => {
 
   it('should call delete endpoint and remove from the user list on delete event', () => {
     reqresServiceSpy.deleteUser.and.returnValue(of({}));
+    const length = users.length;
     elements.userDetail().dispatchEvent(new Event('mouseenter'));
     fixture.detectChanges();
     elements.deleteButton().click();
     expect(reqresServiceSpy.deleteUser).toHaveBeenCalled();
-    expect(component.users.length).toEqual(users.length - 1);
+    expect(component.users.length).toEqual(length - 1);
+  });
+
+  it('should call add user endpoint and add user to the list on add user event', () => {
+    const newUser = {
+      id: aRandom.id(),
+      name: aRandom.name(),
+      avatar: aRandom.user().avatar,
+      createdAt: new Date()
+    };
+    const length = users.length;
+    reqresServiceSpy.addUser.and.returnValue(of(newUser));
+    component.handleAddUser({name: newUser.name, avatar: newUser.avatar});
+    expect(reqresServiceSpy.addUser).toHaveBeenCalledWith({name: newUser.name, avatar: newUser.avatar});
+    expect(component.users.length).toEqual(length + 1);
   });
 });

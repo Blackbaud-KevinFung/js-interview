@@ -4,7 +4,7 @@ import { UserDetailComponent } from './user-detail.component';
 import { aRandom } from '../test/aRandom';
 import { AbstractControl, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { User } from '../user';
-import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatDialogModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReqresService } from '../reqres.service';
 import { of } from 'rxjs';
@@ -25,6 +25,7 @@ describe('UserDetailComponent', () => {
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
+        MatDialogModule,
         BrowserAnimationsModule
       ],
       declarations: [ UserDetailComponent ],
@@ -109,7 +110,7 @@ describe('UserDetailComponent', () => {
   });
 
   it('should call update when clicking save', fakeAsync(() => {
-    reqresServiceSpy.updateUser.and.returnValue(of({name: aRandom.name(), updatedAt: new Date()}));
+    reqresServiceSpy.updateUser.and.returnValue(of({name: aRandom.name(), avatar: component.user.avatar, updatedAt: new Date()}));
     elements.userDetail().dispatchEvent(new Event('mouseenter'));
     fixture.detectChanges();
     elements.editButton().click();
@@ -120,7 +121,7 @@ describe('UserDetailComponent', () => {
     fixture.detectChanges();
     elements.saveButton().click();
     tick();
-    expect(reqresServiceSpy.updateUser).toHaveBeenCalledWith(component.user.id, {name: updatedName});
+    expect(reqresServiceSpy.updateUser).toHaveBeenCalledWith(component.user.id, {name: updatedName, avatar: component.user.avatar});
     expect(nameFormControl.disabled).toEqual(true);
     expect(component.isEditMode).toEqual(false);
   }));
