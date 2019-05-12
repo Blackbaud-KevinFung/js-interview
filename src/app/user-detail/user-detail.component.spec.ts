@@ -6,15 +6,19 @@ import { AbstractControl, FormBuilder, ReactiveFormsModule } from '@angular/form
 import { User } from '../user';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReqresService } from '../reqres.service';
 
 describe('UserDetailComponent', () => {
   let component: UserDetailComponent;
   let fixture: ComponentFixture<UserDetailComponent>;
+  let reqresServiceSpy: jasmine.SpyObj<ReqresService>;
   let elements: any;
   let user: User;
   let nameFormControl: AbstractControl;
 
   beforeEach(async(() => {
+    reqresServiceSpy = jasmine.createSpyObj('ReqresService', ['updateUser']);
+
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
@@ -24,7 +28,8 @@ describe('UserDetailComponent', () => {
       ],
       declarations: [ UserDetailComponent ],
       providers: [
-        FormBuilder
+        FormBuilder,
+        {provide: ReqresService, useValue: reqresServiceSpy}
       ]
     });
   }));
@@ -41,7 +46,9 @@ describe('UserDetailComponent', () => {
       name: (): HTMLInputElement => fixture.nativeElement.querySelector('.name'),
       avatar: (): HTMLImageElement => fixture.nativeElement.querySelector('.avatar'),
       userDetail: (): HTMLDivElement => fixture.nativeElement.querySelector('.user-detail'),
-      editButton: (): HTMLButtonElement => fixture.nativeElement.querySelector('.edit')
+      editButton: (): HTMLButtonElement => fixture.nativeElement.querySelector('.edit'),
+      cancelButton: (): HTMLButtonElement => fixture.nativeElement.querySelector('.cancel'),
+      saveButton: (): HTMLButtonElement => fixture.nativeElement.querySelector('.save')
     };
   });
 
@@ -53,10 +60,13 @@ describe('UserDetailComponent', () => {
 
   it('should show/hide edit and delete buttons on mouse over', () => {
     expect(component.shouldShowEditDelete).toEqual(false);
+    expect(component.shouldShowSaveCancel).toEqual(false);
     elements.userDetail().dispatchEvent(new Event('mouseenter'));
     expect(component.shouldShowEditDelete).toEqual(true);
+    expect(component.shouldShowSaveCancel).toEqual(false);
     elements.userDetail().dispatchEvent(new Event('mouseleave'));
     expect(component.shouldShowEditDelete).toEqual(false);
+    expect(component.shouldShowSaveCancel).toEqual(false);
   });
 
   it('should make user detail editable', () => {
@@ -65,5 +75,47 @@ describe('UserDetailComponent', () => {
     fixture.detectChanges();
     elements.editButton().click();
     expect(nameFormControl.disabled).toEqual(false);
+    expect(component.isEditMode).toEqual(true);
+  });
+
+  it('should show/hide save and cancel buttons when in edit mode', () => {
+    elements.userDetail().dispatchEvent(new Event('mouseenter'));
+    fixture.detectChanges();
+    elements.editButton().click();
+    fixture.detectChanges();
+    elements.userDetail().dispatchEvent(new Event('mouseenter'));
+    expect(component.shouldShowSaveCancel).toEqual(true);
+    expect(component.shouldShowEditDelete).toEqual(false);
+    elements.userDetail().dispatchEvent(new Event('mouseleave'));
+    expect(component.shouldShowEditDelete).toEqual(false);
+    expect(component.shouldShowSaveCancel).toEqual(false);
+  });
+
+  it('should set the value of the name form control back to the original value on cancel', () => {
+    const originalName = component.user.first_name + ' ' + component.user.last_name;
+    elements.userDetail().dispatchEvent(new Event('mouseenter'));
+    fixture.detectChanges();
+    elements.editButton().click();
+
+    nameFormControl.setValue(aRandom.name());
+    expect(nameFormControl.value).not.toEqual(originalName);
+
+    elements.userDetail().dispatchEvent(new Event('mouseenter'));
+    fixture.detectChanges();
+    elements.cancelButton().click();
+    expect(nameFormControl.value).toEqual(originalName);
+  });
+
+  it('should call update when clicking save', () => {
+    elements.userDetail().dispatchEvent(new Event('mouseenter'));
+    fixture.detectChanges();
+    elements.editButton().click();
+
+    const updatedName: string = aRandom.name();
+    nameFormControl.setValue(updatedName);
+    elements.userDetail().dispatchEvent(new Event('mouseenter'));
+    fixture.detectChanges();
+    elements.saveButton().click();
+    expect(reqresServiceSpy.updateUser).toHaveBeenCalledWith(component.user.id, {name: updatedName});
   });
 });
