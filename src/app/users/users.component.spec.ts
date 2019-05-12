@@ -5,8 +5,9 @@ import { ReqresService } from '../reqres.service';
 import { aRandom } from '../test/aRandom';
 import { of } from 'rxjs';
 import { User } from '../user';
-import { MatGridList, MatGridListModule } from '@angular/material';
+import { MatCardModule, MatGridList, MatGridListModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
+import { UserDetailComponent } from '../user-detail/user-detail.component';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -20,10 +21,12 @@ describe('UsersComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        MatGridListModule
+        MatGridListModule,
+        MatCardModule
       ],
       declarations: [
-        UsersComponent
+        UsersComponent,
+        UserDetailComponent
       ],
       providers: [
         { provide: ReqresService, useValue: reqresServiceSpy }

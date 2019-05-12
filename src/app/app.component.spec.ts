@@ -1,10 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
-import { MatGridListModule } from '@angular/material';
+import { MatCardModule, MatGridListModule } from '@angular/material';
 import { ReqresService } from './reqres.service';
 import { aRandom } from './test/aRandom';
 import { of } from 'rxjs';
+import { UserDetailComponent } from './user-detail/user-detail.component';
 
 describe('AppComponent', () => {
   let reqresService: jasmine.SpyObj<ReqresService>;
@@ -14,11 +15,13 @@ describe('AppComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-          MatGridListModule
+          MatGridListModule,
+          MatCardModule
       ],
       declarations: [
         AppComponent,
-        UsersComponent
+        UsersComponent,
+        UserDetailComponent
       ],
       providers: [
         {provide: ReqresService, useValue: reqresService}
