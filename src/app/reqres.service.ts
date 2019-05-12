@@ -14,7 +14,7 @@ export class ReqresService {
   constructor(private http: HttpClient) { }
 
   public getUsers(): Observable<User[]> {
-    return this.http.get<UserResponse>(apiUrl)
+    return this.http.get<UserResponse>(`${apiUrl}?per_page=50`)
         .pipe(
             map((res) => res.data)
         );
