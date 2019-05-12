@@ -124,4 +124,13 @@ describe('UserDetailComponent', () => {
     expect(nameFormControl.disabled).toEqual(true);
     expect(component.isEditMode).toEqual(false);
   }));
+
+  it('should emit a delete event if delete button is clicked', () => {
+    elements.userDetail().dispatchEvent(new Event('mouseenter'));
+    fixture.detectChanges();
+    elements.deleteButton().click();
+    component.deleteEvent.subscribe((value: User) => {
+      expect(value).toEqual(component.user);
+    });
+  });
 });
