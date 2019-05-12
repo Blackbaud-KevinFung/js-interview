@@ -17,7 +17,11 @@ class UserRandom {
     }
 
     public name(): string {
-        return chance.first() + ' ' + chance.last()
+        return chance.first() + ' ' + chance.last();
+    }
+
+    public id(): number {
+        return chance.natural();
     }
 }
 

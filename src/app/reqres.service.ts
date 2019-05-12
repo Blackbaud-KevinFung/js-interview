@@ -24,7 +24,7 @@ export class ReqresService {
         );
   }
 
-  public updateUser(id: number, user: UpdateUser): Observable<UpdateUserResponse> {
+  public updateUser(id: number, user: AddUpdateUser): Observable<UpdateUserResponse> {
     const url = `${apiUrl}/${id}`;
     return this.http.put<UpdateUserResponse>(url, user, httpOptions);
   }
@@ -33,15 +33,28 @@ export class ReqresService {
     const url = `${apiUrl}/${id}`;
     return this.http.delete(url, httpOptions);
   }
+
+  public addUser(user: AddUpdateUser): Observable<AddUserResponse> {
+    return this.http.post<AddUserResponse>(apiUrl, user, httpOptions);
+  }
 }
 
-export class UpdateUser {
+export class AddUpdateUser {
   name: string;
+  avatar: string;
 }
 
 export class UpdateUserResponse {
   name: string;
+  avatar: string;
   updatedAt: Date;
+}
+
+export class AddUserResponse {
+  id: number;
+  name: string;
+  avatar: string;
+  createdAt: Date;
 }
 
 class UserResponse {

@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Create a New User</h1>
+<div mat-dialog-content>
+  <p>Avatar URL</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.avatar">
+  </mat-form-field>
+  <p>Name</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.name">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

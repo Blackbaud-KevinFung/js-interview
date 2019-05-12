@@ -14,15 +14,21 @@ import {
   MatIconModule,
   MatButtonModule,
   MatCardModule,
-  MatFormFieldModule } from '@angular/material';
+  MatFormFieldModule,
+  MatDialogModule
+} from '@angular/material';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { UserAddComponent } from './user-add/user-add.component';
+import { UserAddDialogComponent } from './user-add-dialog/user-add-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    UserAddComponent,
+    UserAddDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +44,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MatIconModule,
     MatButtonModule,
     MatCardModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatDialogModule
+  ],
+  entryComponents: [
+    UserAddDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

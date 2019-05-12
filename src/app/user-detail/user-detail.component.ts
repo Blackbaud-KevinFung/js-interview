@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { User } from '../user';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { ReqresService, UpdateUser, UpdateUserResponse } from '../reqres.service';
+import { ReqresService, AddUpdateUser, UpdateUserResponse } from '../reqres.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -31,7 +31,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   public onSubmit() {
-    const updateUser: UpdateUser = {name: this.nameFormControl().value};
+    const updateUser: AddUpdateUser = {name: this.nameFormControl().value, avatar: this.user.avatar};
     this.reqresService.updateUser(this.user.id, updateUser).subscribe(
         (res: UpdateUserResponse) => {
           this.nameFormControl().disable();

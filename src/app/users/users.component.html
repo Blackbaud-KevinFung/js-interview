@@ -1,7 +1,10 @@
-<mat-grid-list cols="2" rowHeight="10:1">
-  <mat-grid-tile *ngFor="let user of users">
-    <mat-card class="mat-card">
-      <app-user-detail [user]="user" (deleteEvent)="handleDelete($event)"></app-user-detail>
-    </mat-card>
-  </mat-grid-tile>
-</mat-grid-list>
+<div>
+  <app-user-add (addUserEvent)="handleAddUser($event)"></app-user-add>
+  <mat-grid-list cols="2" rowHeight="10:1">
+    <mat-grid-tile *ngFor="let user of users">
+      <mat-card class="mat-card">
+        <app-user-detail [user]="user" (deleteEvent)="handleDelete($event)"></app-user-detail>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

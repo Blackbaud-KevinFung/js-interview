@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
-import { ReqresService } from '../reqres.service';
+import { AddUpdateUser, AddUserResponse, ReqresService } from '../reqres.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-users',
@@ -27,6 +28,35 @@ export class UsersComponent implements OnInit {
           console.log('deleted user: ', deleteUser);
         }
     );
+  }
+
+  public handleAddUser(addUser: AddUpdateUser) {
+    this.reqresService.addUser(addUser).subscribe(
+        (newUser: AddUserResponse) => {
+            const user: User = this.buildNewUser(newUser);
+            this.users.push(user);
+            console.log('added a new user', user);
+        }
+    );
+  }
+
+  private buildNewUser(newUser: AddUserResponse): User {
+      const splitName: string[] = newUser.name.split(' ', 2);
+      let firstName: string = '';
+      let lastName: string = '';
+      if (splitName.length > 1) {
+          firstName = splitName[0];
+          lastName = splitName[1];
+      } else {
+          firstName = splitName[0];
+      }
+      return {
+          id: newUser.id,
+          first_name: firstName,
+          last_name: lastName,
+          avatar: newUser.avatar,
+          email: ''
+      };
   }
 
 }
