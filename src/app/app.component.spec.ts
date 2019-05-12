@@ -1,11 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
-import { MatCardModule, MatGridListModule } from '@angular/material';
+import { MatCardModule, MatFormFieldModule, MatGridListModule, MatInputModule } from '@angular/material';
 import { ReqresService } from './reqres.service';
 import { aRandom } from './test/aRandom';
 import { of } from 'rxjs';
 import { UserDetailComponent } from './user-detail/user-detail.component';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
   let reqresService: jasmine.SpyObj<ReqresService>;
@@ -15,8 +17,12 @@ describe('AppComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-          MatGridListModule,
-          MatCardModule
+        MatGridListModule,
+        MatCardModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        BrowserAnimationsModule
       ],
       declarations: [
         AppComponent,
@@ -24,7 +30,8 @@ describe('AppComponent', () => {
         UserDetailComponent
       ],
       providers: [
-        {provide: ReqresService, useValue: reqresService}
+        {provide: ReqresService, useValue: reqresService},
+        FormBuilder
       ]
     });
   });

@@ -16,6 +16,7 @@ import {
   MatCardModule,
   MatFormFieldModule } from '@angular/material';
 import { UserDetailComponent } from './user-detail/user-detail.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,8 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatInputModule,
     MatGridListModule,

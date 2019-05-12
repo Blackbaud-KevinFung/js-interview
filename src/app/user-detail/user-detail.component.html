@@ -1,4 +1,13 @@
-<div class="user-detail">
+<div class="user-detail" (mouseenter)="showButtons()" (mouseleave)="hideButtons()">
   <img src="{{user.avatar}}" class="avatar">
-  <span class="name">{{user.first_name}} {{user.last_name}}</span>
+  <form [formGroup]="userForm" class="user-form">
+    <mat-form-field>
+      <input matInput formControlName="name">
+    </mat-form-field>
+  </form>
+
+  <div class="edit-delete" *ngIf="shouldShowEditDelete">
+    <button class="edit" mat-raised-button color="primary" (click)="makeEditable()"><i class="fas fa-pen"></i></button>
+    <button class="delete" mat-raised-button color="warn"><i class="fas fa-trash-alt"></i></button>
+  </div>
 </div>

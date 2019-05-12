@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
+    "angular-jasmine-matchers": "0.0.1",
     "chance": "^1.0.18",
     "core-js": "^2.5.4",
     "rxjs": "~6.3.3",

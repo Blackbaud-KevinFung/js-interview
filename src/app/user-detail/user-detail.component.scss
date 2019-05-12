@@ -2,8 +2,22 @@
   height: 100%;
 }
 
+.user-form {
+  display: inline-block;
+}
+
 .avatar {
   height: 30px;
   width: 30px;
   margin-right: 10px;
+}
+
+.edit-delete {
+  float: right;
+}
+
+.edit,
+.delete {
+  display: block;
+  margin: 5px;
 }
