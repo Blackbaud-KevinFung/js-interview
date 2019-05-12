@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { User } from '../user';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { ReqresService, UpdateUser } from '../reqres.service';
+import { ReqresService, UpdateUser, UpdateUserResponse } from '../reqres.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -11,6 +11,9 @@ import { ReqresService, UpdateUser } from '../reqres.service';
 export class UserDetailComponent implements OnInit {
   @Input()
   public user: User;
+
+  @Output()
+  public deleteEvent: EventEmitter<User> = new EventEmitter();
 
   public userForm: FormGroup;
   public shouldShowEditDelete: boolean = false;
@@ -30,11 +33,12 @@ export class UserDetailComponent implements OnInit {
   public onSubmit() {
     const updateUser: UpdateUser = {name: this.nameFormControl().value};
     this.reqresService.updateUser(this.user.id, updateUser).subscribe(
-        () => {
+        (res: UpdateUserResponse) => {
           this.nameFormControl().disable();
           this.isEditMode = false;
-          console.log('updated user');
-        }
+          console.log('updated user:', res);
+        },
+        () => {}
     );
   }
 
@@ -63,6 +67,10 @@ export class UserDetailComponent implements OnInit {
     this.nameFormControl().setValue(this.originalName);
     this.nameFormControl().disable();
     this.isEditMode = false;
+  }
+
+  public delete(): void {
+    this.deleteEvent.emit(this.user);
   }
 
   private nameFormControl(): AbstractControl {

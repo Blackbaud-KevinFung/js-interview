@@ -7,7 +7,7 @@
 
     <div class="action-buttons" *ngIf="shouldShowEditDelete">
       <button class="edit" type="button" mat-raised-button color="primary" (click)="makeEditable()"><i class="fas fa-pen"></i></button>
-      <button class="delete" type="button" mat-raised-button color="warn"><i class="fas fa-trash-alt"></i></button>
+      <button class="delete" type="button" mat-raised-button color="warn" (click)="delete()"><i class="fas fa-trash-alt"></i></button>
     </div>
     <div class="action-buttons" *ngIf="shouldShowSaveCancel">
       <button class="save" type="submit" mat-raised-button color="primary"><i class="fas fa-save"></i></button>

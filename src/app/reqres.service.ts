@@ -34,15 +34,15 @@ export class UpdateUser {
   name: string;
 }
 
+export class UpdateUserResponse {
+  name: string;
+  updatedAt: Date;
+}
+
 class UserResponse {
   page: number;
   per_page: number;
   total: number;
   total_pages: number;
   data: User[];
-}
-
-class UpdateUserResponse {
-  name: string;
-  updatedAt: Date;
 }
