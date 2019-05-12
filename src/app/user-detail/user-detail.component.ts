@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { User } from '../user';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { ReqresService, UpdateUser } from '../reqres.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -13,26 +14,59 @@ export class UserDetailComponent implements OnInit {
 
   public userForm: FormGroup;
   public shouldShowEditDelete: boolean = false;
+  public shouldShowSaveCancel: boolean = false;
+  public isEditMode: boolean = false;
+  private originalName: string;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private reqresService: ReqresService) { }
 
   ngOnInit() {
     this.userForm = this.formBuilder.group({
       name: [this.user.first_name + ' ' + this.user.last_name, []]
     });
-    this.userForm.get('name').disable();
+    this.nameFormControl().disable();
+  }
+
+  public onSubmit() {
+    const updateUser: UpdateUser = {name: this.nameFormControl().value};
+    this.reqresService.updateUser(this.user.id, updateUser).subscribe(
+        () => {
+          this.nameFormControl().disable();
+          this.isEditMode = false;
+          console.log('updated user');
+        }
+    );
   }
 
   public showButtons(): void {
-    this.shouldShowEditDelete = true;
+    if (this.isEditMode) {
+      this.shouldShowSaveCancel = true;
+      this.shouldShowEditDelete = false;
+    } else {
+      this.shouldShowEditDelete = true;
+      this.shouldShowSaveCancel = false;
+    }
   }
 
   public hideButtons(): void {
     this.shouldShowEditDelete = false;
+    this.shouldShowSaveCancel = false;
   }
 
   public makeEditable(): void {
-    this.userForm.get('name').enable();
+    this.originalName = this.nameFormControl().value;
+    this.nameFormControl().enable();
+    this.isEditMode = true;
+  }
+
+  public cancel(): void {
+    this.nameFormControl().setValue(this.originalName);
+    this.nameFormControl().disable();
+    this.isEditMode = false;
+  }
+
+  private nameFormControl(): AbstractControl {
+    return this.userForm.get('name');
   }
 
 }

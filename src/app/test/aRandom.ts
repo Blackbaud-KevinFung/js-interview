@@ -15,6 +15,10 @@ class UserRandom {
     public users(): User[] {
         return chance.n(this.user, 12);
     }
+
+    public name(): string {
+        return chance.first() + ' ' + chance.last()
+    }
 }
 
 export const aRandom: UserRandom = new UserRandom();
