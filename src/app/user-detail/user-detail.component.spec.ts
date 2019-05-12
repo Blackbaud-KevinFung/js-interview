@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { UserDetailComponent } from './user-detail.component';
 import { aRandom } from '../test/aRandom';
@@ -7,6 +7,7 @@ import { User } from '../user';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReqresService } from '../reqres.service';
+import { of } from 'rxjs';
 
 describe('UserDetailComponent', () => {
   let component: UserDetailComponent;
@@ -48,7 +49,8 @@ describe('UserDetailComponent', () => {
       userDetail: (): HTMLDivElement => fixture.nativeElement.querySelector('.user-detail'),
       editButton: (): HTMLButtonElement => fixture.nativeElement.querySelector('.edit'),
       cancelButton: (): HTMLButtonElement => fixture.nativeElement.querySelector('.cancel'),
-      saveButton: (): HTMLButtonElement => fixture.nativeElement.querySelector('.save')
+      saveButton: (): HTMLButtonElement => fixture.nativeElement.querySelector('.save'),
+      deleteButton: (): HTMLButtonElement => fixture.nativeElement.querySelector('.delete')
     };
   });
 
@@ -106,7 +108,8 @@ describe('UserDetailComponent', () => {
     expect(nameFormControl.value).toEqual(originalName);
   });
 
-  it('should call update when clicking save', () => {
+  it('should call update when clicking save', fakeAsync(() => {
+    reqresServiceSpy.updateUser.and.returnValue(of({name: aRandom.name(), updatedAt: new Date()}));
     elements.userDetail().dispatchEvent(new Event('mouseenter'));
     fixture.detectChanges();
     elements.editButton().click();
@@ -116,6 +119,9 @@ describe('UserDetailComponent', () => {
     elements.userDetail().dispatchEvent(new Event('mouseenter'));
     fixture.detectChanges();
     elements.saveButton().click();
+    tick();
     expect(reqresServiceSpy.updateUser).toHaveBeenCalledWith(component.user.id, {name: updatedName});
-  });
+    expect(nameFormControl.disabled).toEqual(true);
+    expect(component.isEditMode).toEqual(false);
+  }));
 });
