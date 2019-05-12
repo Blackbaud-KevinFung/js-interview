@@ -19,7 +19,7 @@ describe('UsersComponent', () => {
   let users: User[];
 
   beforeEach(() => {
-    reqresServiceSpy = jasmine.createSpyObj('ReqresService', ['getUsers']);
+    reqresServiceSpy = jasmine.createSpyObj('ReqresService', ['getUsers', 'deleteUser']);
 
     TestBed.configureTestingModule({
       imports: [
@@ -45,7 +45,9 @@ describe('UsersComponent', () => {
     fixture = TestBed.createComponent(UsersComponent);
     component = fixture.componentInstance;
     elements = {
-      matGridList: (): MatGridList => fixture.debugElement.query(By.directive(MatGridList)).componentInstance
+      matGridList: (): MatGridList => fixture.debugElement.query(By.directive(MatGridList)).componentInstance,
+      userDetail: (): HTMLDivElement => fixture.nativeElement.querySelector('.user-detail'),
+      deleteButton: (): HTMLButtonElement => fixture.nativeElement.querySelector('.delete')
     };
     users = aRandom.users();
     reqresServiceSpy.getUsers.and.returnValue(of(users));
@@ -59,5 +61,14 @@ describe('UsersComponent', () => {
 
   it('should have a grid size of 2', () => {
     expect(elements.matGridList().cols).toEqual(2);
+  });
+
+  it('should call delete endpoint and remove from the user list on delete event', () => {
+    reqresServiceSpy.deleteUser.and.returnValue(of({}));
+    elements.userDetail().dispatchEvent(new Event('mouseenter'));
+    fixture.detectChanges();
+    elements.deleteButton().click();
+    expect(reqresServiceSpy.deleteUser).toHaveBeenCalled();
+    expect(component.users.length).toEqual(users.length - 1);
   });
 });
