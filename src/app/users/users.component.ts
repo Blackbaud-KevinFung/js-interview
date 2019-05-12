@@ -20,4 +20,13 @@ export class UsersComponent implements OnInit {
         });
   }
 
+  public handleDelete(deleteUser: User) {
+    this.reqresService.deleteUser(deleteUser.id).subscribe(
+        () => {
+          this.users = this.users.filter((user: User) => user.id !== deleteUser.id);
+          console.log('deleted user: ', deleteUser);
+        }
+    );
+  }
+
 }

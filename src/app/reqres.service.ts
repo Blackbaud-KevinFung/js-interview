@@ -28,6 +28,11 @@ export class ReqresService {
     const url = `${apiUrl}/${id}`;
     return this.http.put<UpdateUserResponse>(url, user, httpOptions);
   }
+
+  public deleteUser(id: number): Observable<any> {
+    const url = `${apiUrl}/${id}`;
+    return this.http.delete(url, httpOptions);
+  }
 }
 
 export class UpdateUser {
