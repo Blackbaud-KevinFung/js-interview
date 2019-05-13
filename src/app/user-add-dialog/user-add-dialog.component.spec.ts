@@ -2,7 +2,15 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserAddDialogComponent } from './user-add-dialog.component';
 import { FormsModule } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef, MatFormFieldModule, MatInputModule } from '@angular/material';
+import {
+  MAT_DIALOG_DATA,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatDialogRef,
+  MatFormFieldModule,
+  MatInputModule,
+  MatNativeDateModule
+} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('UserAddDialogComponent', () => {
@@ -16,6 +24,8 @@ describe('UserAddDialogComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatDialogModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
         BrowserAnimationsModule
       ],
       declarations: [ UserAddDialogComponent ],

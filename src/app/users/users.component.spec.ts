@@ -6,13 +6,13 @@ import { aRandom } from '../test/aRandom';
 import { of } from 'rxjs';
 import { User } from '../user';
 import {
-  MatCardModule,
+  MatCardModule, MatDatepickerModule,
   MatDialogModule,
   MatFormFieldModule,
   MatGridList,
   MatGridListModule,
   MatIconModule,
-  MatInputModule
+  MatInputModule, MatNativeDateModule
 } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { UserDetailComponent } from '../user-detail/user-detail.component';
@@ -40,6 +40,8 @@ describe('UsersComponent', () => {
         MatInputModule,
         MatIconModule,
         MatDialogModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
         FormsModule,
         BrowserAnimationsModule
       ],
@@ -93,12 +95,13 @@ describe('UsersComponent', () => {
       id: aRandom.id(),
       name: aRandom.name(),
       avatar: aRandom.user().avatar,
+      date: aRandom.date(),
       createdAt: new Date()
     };
     const length = users.length;
     reqresServiceSpy.addUser.and.returnValue(of(newUser));
-    component.handleAddUser({name: newUser.name, avatar: newUser.avatar});
-    expect(reqresServiceSpy.addUser).toHaveBeenCalledWith({name: newUser.name, avatar: newUser.avatar});
+    component.handleAddUser({name: newUser.name, avatar: newUser.avatar, date: newUser.date});
+    expect(reqresServiceSpy.addUser).toHaveBeenCalledWith({name: newUser.name, avatar: newUser.avatar, date: newUser.date});
     expect(component.users.length).toEqual(length + 1);
   });
 });

@@ -2,7 +2,15 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserAddComponent } from './user-add.component';
 import { UserAddDialogComponent } from '../user-add-dialog/user-add-dialog.component';
-import { MatDialog, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
+import {
+  MatDatepickerModule,
+  MatDialog,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatNativeDateModule
+} from '@angular/material';
 import { of } from 'rxjs';
 import { aRandom } from '../test/aRandom';
 import { FormsModule } from '@angular/forms';
@@ -31,6 +39,8 @@ describe('UserAddComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatDialogModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
         BrowserAnimationsModule
       ],
       declarations: [

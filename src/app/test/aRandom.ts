@@ -5,10 +5,10 @@ class UserRandom {
     public user(): User {
         return {
             id: chance.natural(),
-            email: chance.email(),
             first_name: chance.first(),
             last_name: chance.last(),
-            avatar: chance.url()
+            avatar: chance.url(),
+            date: chance.date()
         };
     }
 
@@ -22,6 +22,10 @@ class UserRandom {
 
     public id(): number {
         return chance.natural();
+    }
+
+    public date(): Date {
+        return chance.date();
     }
 }
 
