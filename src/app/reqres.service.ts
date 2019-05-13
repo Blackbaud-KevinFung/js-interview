@@ -44,28 +44,27 @@ export class ReqresService {
     const randomDate: Date = aRandom.date();
     return {
       id: apiUser.id,
-      first_name: apiUser.first_name,
-      last_name: apiUser.last_name,
+      name: apiUser.first_name + ' ' + apiUser.last_name,
       avatar: apiUser.avatar,
       date: randomDate
     };
   }
 }
 
-export class AddUpdateUser {
+export interface AddUpdateUser {
   name: string;
   avatar: string;
   date: Date;
 }
 
-export class UpdateUserResponse {
+export interface UpdateUserResponse {
   name: string;
   avatar: string;
   date: Date;
   updatedAt: Date;
 }
 
-export class AddUserResponse {
+export interface AddUserResponse {
   id: number;
   name: string;
   avatar: string;
@@ -73,7 +72,7 @@ export class AddUserResponse {
   createdAt: Date;
 }
 
-export class UserResponse {
+export interface UserResponse {
   page: number;
   per_page: number;
   total: number;
@@ -81,7 +80,7 @@ export class UserResponse {
   data: ApiUser[];
 }
 
-export class ApiUser {
+export interface ApiUser {
   id: number;
   email: string;
   first_name: string;

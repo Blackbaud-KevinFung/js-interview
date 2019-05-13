@@ -60,7 +60,7 @@ describe('UserDetailComponent', () => {
   });
 
   it('should display the user details and is not editable', () => {
-    expect(nameFormControl.value).toEqual(user.first_name + ' ' + user.last_name);
+    expect(nameFormControl.value).toEqual(user.name);
     expect(dateFormControl.value).toEqual(user.date);
     expect(dateFormControl.disabled).toEqual(true);
     expect(nameFormControl.disabled).toEqual(true);
@@ -103,7 +103,7 @@ describe('UserDetailComponent', () => {
   });
 
   it('should set the value of the name and date form controls back to the original value on cancel', () => {
-    const originalName = component.user.first_name + ' ' + component.user.last_name;
+    const originalName = component.user.name;
     const originalDate = component.user.date;
     elements.userDetail().dispatchEvent(new Event('mouseenter'));
     fixture.detectChanges();

@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { aRandom } from './test/aRandom';
 import { User } from './user';
 import { of } from 'rxjs';
-import { type } from 'os';
 
 describe('ReqresService', () => {
   let httpClient: jasmine.SpyObj<HttpClient>;
@@ -26,14 +25,7 @@ describe('ReqresService', () => {
   });
 
   it('should map get user response to a user', () => {
-    const user: User = aRandom.user();
-    const apiUser: ApiUser = {
-      id: user.id,
-      email: '',
-      first_name: user.first_name,
-      last_name: user.last_name,
-      avatar: user.avatar
-    };
+    const apiUser: ApiUser = aRandom.apiUser();
     const userResponse: UserResponse = {
       page: 1,
       per_page: 1,
@@ -45,9 +37,9 @@ describe('ReqresService', () => {
     const service: ReqresService = TestBed.get(ReqresService);
     service.getUsers().subscribe((value: User[]) => {
       const returnedUser: User = value[0];
-      expect(returnedUser.first_name).toEqual(user.first_name);
-      expect(returnedUser.last_name).toEqual(user.last_name);
-      expect(returnedUser.avatar).toEqual(user.avatar);
+      expect(returnedUser.id).toEqual(apiUser.id);
+      expect(returnedUser.name).toEqual(apiUser.first_name + ' ' + apiUser.last_name);
+      expect(returnedUser.avatar).toEqual(apiUser.avatar);
     });
   });
 });

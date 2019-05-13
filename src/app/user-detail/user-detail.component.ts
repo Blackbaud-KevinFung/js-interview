@@ -26,7 +26,7 @@ export class UserDetailComponent implements OnInit {
 
   ngOnInit() {
     this.userForm = this.formBuilder.group({
-      name: [this.user.first_name + ' ' + this.user.last_name, []],
+      name: [this.user.name, []],
       date: [this.user.date, []]
     });
     this.nameFormControl().disable();

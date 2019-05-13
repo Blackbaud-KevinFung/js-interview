@@ -40,19 +40,9 @@ export class UsersComponent implements OnInit {
   }
 
   private buildNewUser(newUser: AddUserResponse): User {
-      const splitName: string[] = newUser.name.split(' ', 2);
-      let firstName: string = '';
-      let lastName: string = '';
-      if (splitName.length > 1) {
-          firstName = splitName[0];
-          lastName = splitName[1];
-      } else {
-          firstName = splitName[0];
-      }
       return {
           id: newUser.id,
-          first_name: firstName,
-          last_name: lastName,
+          name: newUser.name,
           avatar: newUser.avatar,
           date: newUser.date
       };
