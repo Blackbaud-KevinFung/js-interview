@@ -73,7 +73,7 @@ export class AddUserResponse {
   createdAt: Date;
 }
 
-class UserResponse {
+export class UserResponse {
   page: number;
   per_page: number;
   total: number;
@@ -81,7 +81,7 @@ class UserResponse {
   data: ApiUser[];
 }
 
-class ApiUser {
+export class ApiUser {
   id: number;
   email: string;
   first_name: string;
