@@ -1,12 +1,15 @@
 <h1 mat-dialog-title>Create a New User</h1>
 <div mat-dialog-content>
-  <p>Avatar URL</p>
   <mat-form-field>
-    <input matInput [(ngModel)]="data.avatar">
+    <input placeholder="Avatar URL" matInput [(ngModel)]="data.avatar">
   </mat-form-field>
-  <p>Name</p>
   <mat-form-field>
-    <input matInput [(ngModel)]="data.name">
+    <input placeholder="Name" matInput [(ngModel)]="data.name">
+  </mat-form-field>
+  <mat-form-field>
+    <input placeholder="Date" matInput [matDatepicker]="picker" [(ngModel)]="data.date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker startView="year"></mat-datepicker>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>

@@ -15,7 +15,9 @@ import {
   MatButtonModule,
   MatCardModule,
   MatFormFieldModule,
-  MatDialogModule
+  MatDialogModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 } from '@angular/material';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -45,7 +47,9 @@ import { UserAddDialogComponent } from './user-add-dialog/user-add-dialog.compon
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   entryComponents: [
     UserAddDialogComponent

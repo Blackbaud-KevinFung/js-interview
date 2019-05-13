@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { User } from './user';
+import { aRandom } from './test/aRandom';
 
 const apiUrl = 'https://reqres.in/api/users';
 
@@ -20,7 +21,8 @@ export class ReqresService {
   public getUsers(): Observable<User[]> {
     return this.http.get<UserResponse>(`${apiUrl}?per_page=50`)
         .pipe(
-            map((res) => res.data)
+            map((res: UserResponse) => res.data),
+            map((apiUsers: ApiUser[]) => apiUsers.map((apiUser: ApiUser) => this.convertToUser(apiUser)))
         );
   }
 
@@ -37,16 +39,29 @@ export class ReqresService {
   public addUser(user: AddUpdateUser): Observable<AddUserResponse> {
     return this.http.post<AddUserResponse>(apiUrl, user, httpOptions);
   }
+
+  private convertToUser(apiUser: ApiUser): User {
+    const randomDate: Date = aRandom.date();
+    return {
+      id: apiUser.id,
+      first_name: apiUser.first_name,
+      last_name: apiUser.last_name,
+      avatar: apiUser.avatar,
+      date: randomDate
+    };
+  }
 }
 
 export class AddUpdateUser {
   name: string;
   avatar: string;
+  date: Date;
 }
 
 export class UpdateUserResponse {
   name: string;
   avatar: string;
+  date: Date;
   updatedAt: Date;
 }
 
@@ -54,6 +69,7 @@ export class AddUserResponse {
   id: number;
   name: string;
   avatar: string;
+  date: Date;
   createdAt: Date;
 }
 
@@ -62,5 +78,13 @@ class UserResponse {
   per_page: number;
   total: number;
   total_pages: number;
-  data: User[];
+  data: ApiUser[];
+}
+
+class ApiUser {
+  id: number;
+  email: string;
+  first_name: string;
+  last_name: string;
+  avatar: string;
 }

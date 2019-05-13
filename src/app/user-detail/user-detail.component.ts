@@ -20,21 +20,25 @@ export class UserDetailComponent implements OnInit {
   public shouldShowSaveCancel: boolean = false;
   public isEditMode: boolean = false;
   private originalName: string;
+  private originalDate: Date;
 
   constructor(private formBuilder: FormBuilder, private reqresService: ReqresService) { }
 
   ngOnInit() {
     this.userForm = this.formBuilder.group({
-      name: [this.user.first_name + ' ' + this.user.last_name, []]
+      name: [this.user.first_name + ' ' + this.user.last_name, []],
+      date: [this.user.date, []]
     });
     this.nameFormControl().disable();
+    this.dateFormControl.disable();
   }
 
   public onSubmit() {
-    const updateUser: AddUpdateUser = {name: this.nameFormControl().value, avatar: this.user.avatar};
+    const updateUser: AddUpdateUser = {name: this.nameFormControl().value, avatar: this.user.avatar, date: this.dateFormControl.value};
     this.reqresService.updateUser(this.user.id, updateUser).subscribe(
         (res: UpdateUserResponse) => {
           this.nameFormControl().disable();
+          this.dateFormControl.disable();
           this.isEditMode = false;
           console.log('updated user:', res);
         },
@@ -59,13 +63,17 @@ export class UserDetailComponent implements OnInit {
 
   public makeEditable(): void {
     this.originalName = this.nameFormControl().value;
+    this.originalDate = this.dateFormControl.value;
     this.nameFormControl().enable();
+    this.dateFormControl.enable();
     this.isEditMode = true;
   }
 
   public cancel(): void {
     this.nameFormControl().setValue(this.originalName);
+    this.dateFormControl.setValue(this.originalDate);
     this.nameFormControl().disable();
+    this.dateFormControl.disable();
     this.isEditMode = false;
   }
 
@@ -75,6 +83,10 @@ export class UserDetailComponent implements OnInit {
 
   private nameFormControl(): AbstractControl {
     return this.userForm.get('name');
+  }
+
+  private get dateFormControl(): AbstractControl {
+    return this.userForm.get('date');
   }
 
 }

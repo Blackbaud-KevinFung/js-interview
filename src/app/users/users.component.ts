@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
 import { AddUpdateUser, AddUserResponse, ReqresService } from '../reqres.service';
-import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-users',
@@ -55,7 +54,7 @@ export class UsersComponent implements OnInit {
           first_name: firstName,
           last_name: lastName,
           avatar: newUser.avatar,
-          email: ''
+          date: newUser.date
       };
   }
 

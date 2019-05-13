@@ -23,8 +23,8 @@ export class UserAddComponent implements OnInit {
       data: {}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+    dialogRef.afterClosed().subscribe((result: AddUpdateUser) => {
+      if (result.name) {
         this.addUserEvent.emit(result);
       }
     });

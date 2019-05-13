@@ -4,6 +4,11 @@
     <mat-form-field>
       <input matInput formControlName="name">
     </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker startView="year"></mat-datepicker>
+    </mat-form-field>
 
     <div class="action-buttons" *ngIf="shouldShowEditDelete">
       <button class="edit" type="button" mat-raised-button color="primary" (click)="makeEditable()"><i class="fas fa-pen"></i></button>
