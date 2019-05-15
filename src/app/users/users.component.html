@@ -1,6 +1,6 @@
 <div>
   <app-user-add (addUserEvent)="handleAddUser($event)"></app-user-add>
-  <mat-grid-list cols="2" rowHeight="5:1">
+  <mat-grid-list cols="{{columns}}" rowHeight="{{rowHeight}}">
     <mat-grid-tile *ngFor="let user of users">
       <mat-card class="mat-card">
         <app-user-detail [user]="user" (deleteEvent)="handleDelete($event)"></app-user-detail>
