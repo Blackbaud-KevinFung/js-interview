@@ -23,6 +23,7 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UserAddComponent } from './user-add/user-add.component';
 import { UserAddDialogComponent } from './user-add-dialog/user-add-dialog.component';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { UserAddDialogComponent } from './user-add-dialog/user-add-dialog.compon
     MatFormFieldModule,
     MatDialogModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    LayoutModule
   ],
   entryComponents: [
     UserAddDialogComponent
