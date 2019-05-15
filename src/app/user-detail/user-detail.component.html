@@ -1,14 +1,18 @@
 <div class="user-detail" (mouseenter)="showButtons()" (mouseleave)="hideButtons()">
   <img src="{{user.avatar}}" class="avatar">
   <form [formGroup]="userForm" class="user-form" (ngSubmit)="onSubmit()" novalidate>
-    <mat-form-field>
-      <input matInput formControlName="name">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput [matDatepicker]="picker" formControlName="date">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker startView="year"></mat-datepicker>
-    </mat-form-field>
+    <div class="form-row">
+      <mat-form-field class="field">
+        <input matInput formControlName="name">
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field class="field">
+        <input matInput [matDatepicker]="picker" formControlName="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker startView="year"></mat-datepicker>
+      </mat-form-field>
+    </div>
 
     <div class="action-buttons" *ngIf="shouldShowEditDelete">
       <button class="edit" type="button" mat-raised-button color="primary" (click)="makeEditable()"><i class="fas fa-pen"></i></button>

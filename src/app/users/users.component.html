@@ -1,5 +1,5 @@
 <div>
-  <app-user-add (addUserEvent)="handleAddUser($event)"></app-user-add>
+  <app-user-add (addUserEvent)="handleAddUser($event)" class="add"></app-user-add>
   <mat-grid-list cols="{{columns}}" rowHeight="{{rowHeight}}">
     <mat-grid-tile *ngFor="let user of users">
       <mat-card class="mat-card">

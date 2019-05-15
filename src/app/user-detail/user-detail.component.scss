@@ -1,11 +1,17 @@
+@import "~src/app/shared/_mixins";
+
 .user-detail {
   height: 100%;
 }
 
 .user-form {
   display: inline-block;
-  width: 80%;
+  width: 85%;
   height: 100px;
+}
+
+.field {
+  width: 100%;
 }
 
 .avatar {
@@ -16,19 +22,88 @@
   vertical-align: top;
 }
 
-.action-buttons {
-  float: right;
+@include xxsmall {
+  .form-row {
+    width: 100%;
+  }
+
+  .action-buttons {
+    float: none;
+
+  }
+
+  .edit,
+  .delete,
+  .save,
+  .cancel {
+    display: inline-block;
+    margin: 5px;
+    top: 0px;
+    width: 45%;
+  }
 }
 
-.edit,
-.delete,
-.save,
-.cancel {
-  display: block;
-  margin: 5px;
-  top: -40px;
+@include xsmall {
+  .user-form {
+    width: 80%;
+  }
+
+  .form-row {
+    width: 51%;
+    float: left;
+  }
+
+  .field {
+    height: 20px;
+  }
+
+  .action-buttons {
+    float: right;
+  }
+
+  .edit,
+  .delete,
+  .save,
+  .cancel {
+    display: block;
+    top: -40px;
+  }
 }
 
-mat-form-field {
-  height: 20px;
+@include small {
+  .user-form {
+    width: 85%;
+  }
+
+  .form-row {
+    width: 60%;
+  }
+
+  .field {
+    height: 20px;
+  }
+
+  .action-buttons {
+    float: right;
+  }
+
+  .edit,
+  .delete,
+  .save,
+  .cancel {
+    top: -32px;
+  }
+}
+
+@include medium {
+  .form-row {
+    width: 70%;
+  }
+
+  .edit,
+  .delete,
+  .save,
+  .cancel {
+    top: -38px;
+  }
 }
